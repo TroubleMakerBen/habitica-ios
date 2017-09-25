@@ -337,6 +337,8 @@ class LoginViewModel: LoginViewModelType, LoginViewModelInputs, LoginViewModelOu
     func onSuccessfulLogin() {
         self.sharedManager?.setCredentials()
         self.sharedManager?.fetchUser({[weak self] _ in
+            
+            GetTasksCall().fetchTasks().start()
             self?.onSuccessfulLoginProperty.value = ()
         }, onError: {[weak self] _ in
             self?.onSuccessfulLoginProperty.value = ()

@@ -110,27 +110,27 @@ class ChallengeDetailTableViewController: HRPGBaseViewController {
             guard let cell = tableViewCell as? TaskTableViewCell else {
                 return
             }
-            guard let task = object as? Task else {
+            guard let task = object as? HRPGTask else {
                 return
             }
-            cell.configure(task: task)
+//            cell.configure(task: task)
             } as TableViewCellConfigureBlock
-        let configureFetchRequest = {[weak self] fetchRequest in
-            fetchRequest?.sortDescriptors = [NSSortDescriptor(key: "type", ascending: false), NSSortDescriptor(key: "order", ascending: false)]
-            guard let weakSelf = self else {
-                return
-            }
-            fetchRequest?.predicate = NSPredicate(format: "challengeID == %@", weakSelf.challengeId ?? "")
-            } as FetchRequestConfigureBlock
-        self.dataSource = HRPGCoreDataDataSource(managedObjectContext: self.managedObjectContext,
-                                                 entityName: "Task",
-                                                 cellIdentifier: "Cell",
-                                                 configureCellBlock: configureCell,
-                                                 fetchRequest: configureFetchRequest,
-                                                 asDelegateFor: self.tableView)
+//        let configureFetchRequest = {[weak self] fetchRequest in
+//            fetchRequest?.sortDescriptors = [NSSortDescriptor(key: "type", ascending: false), NSSortDescriptor(key: "order", ascending: false)]
+//            guard let weakSelf = self else {
+//                return
+//            }
+//            fetchRequest?.predicate = NSPredicate(format: "challengeID == %@", weakSelf.challengeId ?? "")
+//            } as FetchRequestConfigureBlock
+//        self.dataSource = HRPGCoreDataDataSource(managedObjectContext: self.managedObjectContext,
+//                                                 entityName: "Task",
+//                                                 cellIdentifier: "Cell",
+//                                                 configureCellBlock: configureCell,
+//                                                 fetchRequest: configureFetchRequest,
+//                                                 asDelegateFor: self.tableView)
         self.dataSource?.sectionNameKeyPath = "type"
         self.dataSource?.cellIdentifierBlock = {(item, indexPath) in
-            guard let task = item as? Task else {
+            guard let task = item as? HRPGTask else {
                 return ""
             }
             return task.type
