@@ -8,6 +8,7 @@
 
 #import "HRPGCheckBoxView.h"
 #import "UIColor+Habitica.h"
+#import "Habitica-Swift.h"
 
 @interface HRPGCheckBoxView ()
 
@@ -57,7 +58,7 @@
     self.checked = [task.completed boolValue];
     if ([task.type isEqualToString:@"daily"]) {
         self.cornerRadius = 3;
-
+        
         if ([task.completed boolValue]) {
             self.boxFillColor = [UIColor gray400];
             self.backgroundColor = [UIColor gray500];
@@ -71,7 +72,7 @@
                 self.checkColor = [UIColor gray200];
             }
         }
-
+        
     } else {
         self.cornerRadius = self.size / 2;
         if ([task.completed boolValue]) {
@@ -83,7 +84,42 @@
             self.checkColor = [task taskColor];
         }
     }
+    
+    [self setNeedsDisplay];
+}
 
+- (void)configureForHRPGTask:(HRPGTask *)task {
+    self.boxFillColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    self.checked = task.completed;
+    if ([task.type isEqualToString:@"daily"]) {
+        self.cornerRadius = 3;
+        
+        if (task.completed) {
+            self.boxFillColor = [UIColor gray400];
+            self.backgroundColor = [UIColor gray500];
+            self.checkColor = [UIColor gray200];
+        } else {
+//            if ([task dueTodayWithOffset:0]) {
+//                self.backgroundColor = [task lightTaskColor];
+//                self.checkColor = [task taskColor];
+//            } else {
+//                self.backgroundColor = [UIColor gray600];
+//                self.checkColor = [UIColor gray200];
+//            }
+        }
+        
+    } else {
+        self.cornerRadius = self.size / 2;
+        if (task.completed) {
+            self.boxFillColor = [UIColor gray400];
+            self.backgroundColor = [UIColor gray600];
+            self.checkColor = [UIColor gray200];
+        } else {
+            self.backgroundColor = [task lightTaskColor];
+            self.checkColor = [task taskColor];
+        }
+    }
+    
     [self setNeedsDisplay];
 }
 
@@ -105,6 +141,31 @@
         }
     }
     
+    [self setup];
+}
+
+- (void)configureForHRPGChecklistItem:(HRPGChecklistItem *)item withTitle:(BOOL)withTitle {
+    self.checked = item.completed || item.currentlyChecking;
+    if (self.label == nil && withTitle) {
+        self.label = [[UILabel alloc] init];
+        self.label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+        [self addSubview:self.label];
+        
+        if (self.checked) {
+            NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:item.text];
+            [attributeString addAttribute:NSStrikethroughStyleAttributeName
+                                    value:@2
+                                    range:NSMakeRange(0, [attributeString length])];
+            self.label.attributedText = attributeString;
+        } else {
+            self.label.text = item.text;
+        }
+    }
+    
+    [self setup];
+}
+
+- (void)setup {
     self.label.textColor = self.checked ? [UIColor gray400] : [UIColor gray100];
     self.backgroundColor = [UIColor clearColor];
     self.boxFillColor = self.checked ? [UIColor gray400] : [UIColor clearColor];

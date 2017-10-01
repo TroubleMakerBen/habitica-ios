@@ -69,14 +69,14 @@ class TaskDetailLineView: UIView {
 
         return view
     }
-
+    
     public func configure(task: Task) {
         hasContent = false
         setTag(enabled: task.tagArray.count > 0)
         setReminder(enabled: (task.reminders?.count ?? 0) > 0)
         setChallenge(enabled: task.challengeID != nil)
         setStreak(count: task.streak?.intValue ?? 0)
-
+        
         if task.type == "habit" {
             setCalendarIcon(enabled: false)
             setLastCompleted(task: task)
@@ -86,9 +86,31 @@ class TaskDetailLineView: UIView {
         } else if task.type == "todo" {
             setDueDate(task: task)
         }
-
+        
         hasContent = !tagIconView.isHidden || !reminderIconView.isHidden || !challengeIconView.isHidden || !streakIconView.isHidden || !detailLabel.isHidden
-
+        
+        self.invalidateIntrinsicContentSize()
+    }
+    
+    public func configureNew(task: HRPGTask) {
+        hasContent = false
+//        setTag(enabled: task.tagArray.count > 0)
+//        setReminder(enabled: (task.reminders?.count ?? 0) > 0)
+        setChallenge(enabled: task.challengeID != "")
+        setStreak(count: task.streak)
+        
+        if task.type == "habit" {
+            setCalendarIcon(enabled: false)
+//            setLastCompleted(task: task)
+        } else if task.type == "daily" {
+            setCalendarIcon(enabled: false)
+            detailLabel.isHidden = true
+        } else if task.type == "todo" {
+//            setDueDate(task: task)
+        }
+        
+        hasContent = !tagIconView.isHidden || !reminderIconView.isHidden || !challengeIconView.isHidden || !streakIconView.isHidden || !detailLabel.isHidden
+        
         self.invalidateIntrinsicContentSize()
     }
 

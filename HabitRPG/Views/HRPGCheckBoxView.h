@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ChecklistItem.h"
 #import "Task+CoreDataClass.h"
+@class HRPGTask, HRPGChecklistItem;
 
 @interface HRPGCheckBoxView : UIView
 
@@ -21,10 +22,12 @@
 @property(nonatomic) BOOL centerCheckbox;
 @property(nonatomic) CGFloat padding;
 @property(nonatomic) BOOL borderedBox;
- 
+
 - (void)configureForTask:(Task *)task;
+- (void)configureForHRPGTask:(HRPGTask *)task;
 - (void)configureForTask:(Task *)task withOffset:(NSInteger)offset;
 - (void)configureForChecklistItem:(ChecklistItem *)item withTitle:(BOOL)withTitle;
+- (void)configureForHRPGChecklistItem:(HRPGChecklistItem *)item withTitle:(BOOL)withTitle;
 
 @property(copy, nonatomic) void (^wasTouched)(void);
 

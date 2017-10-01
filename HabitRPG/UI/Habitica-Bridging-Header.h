@@ -38,3 +38,5 @@
 #import "QuestReward+CoreDataClass.h"
 #import "HRPGGemPurchaseView.h"
 #import "HRPGMaintenanceViewController.h"
+#import "HRPGTableViewController.h"
+#import "TasksDataSource.h"
