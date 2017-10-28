@@ -39,3 +39,5 @@
 #import "HRPGGemPurchaseView.h"
 #import "HRPGMaintenanceViewController.h"
 #import "HRPGShopViewController.h"
+#import "Challenge+CoreDataClass.h"
+#import "HRPGTaskProtocol.h"

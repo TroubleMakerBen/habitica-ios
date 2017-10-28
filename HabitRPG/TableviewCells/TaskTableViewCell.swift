@@ -18,7 +18,7 @@ class TaskTableViewCell: UITableViewCell {
     @IBOutlet weak var taskDetailLine: TaskDetailLineView!
     //swiftlint:disable private_outlet
 
-    func configure(task: Task) {
+    func configure(task: HRPGTaskProtocol) {
         self.titleLabel.text = task.text?.unicodeEmoji
         self.titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
         self.titleLabel.textColor = .gray10()
@@ -33,12 +33,16 @@ class TaskTableViewCell: UITableViewCell {
             self.subtitleLabel.isHidden = true
         }
 
-        self.taskDetailLine.configure(task: task)
-        self.taskDetailLine.isHidden = !self.taskDetailLine.hasContent
+        if let task = task as? Task {
+            self.taskDetailLine.configure(task: task)
+            self.taskDetailLine.isHidden = !self.taskDetailLine.hasContent
+        }
 
         self.setNeedsLayout()
         
-        self.applyAccessibility(task)
+        if let task = task as? Task {
+            self.applyAccessibility(task)
+        }
     }
     
     func applyAccessibility(_ task: Task) {
