@@ -33,10 +33,8 @@ class TaskTableViewCell: UITableViewCell {
             self.subtitleLabel.isHidden = true
         }
 
-        if let task = task as? Task {
-            self.taskDetailLine.configure(task: task)
-            self.taskDetailLine.isHidden = !self.taskDetailLine.hasContent
-        }
+        self.taskDetailLine.configure(task: task)
+        self.taskDetailLine.isHidden = !self.taskDetailLine.hasContent
 
         self.setNeedsLayout()
         
