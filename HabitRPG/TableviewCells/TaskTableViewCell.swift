@@ -19,7 +19,9 @@ class TaskTableViewCell: UITableViewCell {
     //swiftlint:disable private_outlet
 
     func configure(task: HRPGTaskProtocol) {
-        self.titleLabel.text = task.text?.unicodeEmoji
+        if let text = task.text {
+            self.titleLabel.attributedText = try? Down(markdownString: text.unicodeEmoji).toHabiticaAttributedString()
+        }
         self.titleLabel.font = UIFont.preferredFont(forTextStyle: .body)
         self.titleLabel.textColor = .gray10()
         self.subtitleLabel.textColor = .gray200()
